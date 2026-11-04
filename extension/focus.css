@@ -1,0 +1,740 @@
+/* Injected at document_start on every www.imdb.com page. IMDb's own <body> is
+   hidden before it can paint; the extension draws #ifx-root instead. Adding
+   .ifx-pass to <html> (sign-in screens, or the "show original" fallback) lifts it. */
+
+html:not(.ifx-pass) body {
+  display: none !important;
+}
+
+html:not(.ifx-pass) {
+  --ifx-bg: #f6f5f2;
+  --ifx-surface: #ffffff;
+  --ifx-sunken: #ebe9e3;
+  --ifx-text: #1c1b19;
+  --ifx-muted: #6a665e;
+  --ifx-line: #dcd8cf;
+  --ifx-star: #d19600;
+  --ifx-link: #1f4fbf;
+  --ifx-none: #3f8a52;
+  --ifx-mild: #a68a14;
+  --ifx-moderate: #c7701a;
+  --ifx-severe: #bf3a2b;
+  background: var(--ifx-bg) !important;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.ifx-pass) {
+    --ifx-bg: #121211;
+    --ifx-surface: #1b1b19;
+    --ifx-sunken: #262624;
+    --ifx-text: #ecebe6;
+    --ifx-muted: #9d998f;
+    --ifx-line: #31302d;
+    --ifx-star: #f5c518;
+    --ifx-link: #8fb2ff;
+    --ifx-none: #6fb67f;
+    --ifx-mild: #d6bb4a;
+    --ifx-moderate: #eb923c;
+    --ifx-severe: #f06b5c;
+  }
+}
+
+#ifx-root {
+  all: initial;
+  display: block;
+  min-height: 100vh;
+  background: var(--ifx-bg);
+  color: var(--ifx-text);
+  font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Resets use :where() so they carry no specificity and never beat the component rules below. */
+:where(#ifx-root) *,
+:where(#ifx-root) *::before,
+:where(#ifx-root) *::after {
+  box-sizing: border-box;
+}
+
+:where(#ifx-root) h1,
+:where(#ifx-root) h2,
+:where(#ifx-root) h3,
+:where(#ifx-root) p,
+:where(#ifx-root) ul,
+:where(#ifx-root) dl,
+:where(#ifx-root) dd {
+  margin: 0;
+  padding: 0;
+}
+
+:where(#ifx-root) ul {
+  list-style: none;
+}
+
+:where(#ifx-root) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(#ifx-root) button {
+  font: inherit;
+  color: inherit;
+}
+
+#ifx-root [hidden] {
+  display: none !important;
+}
+
+#ifx-root :focus-visible {
+  outline: 2px solid var(--ifx-link);
+  outline-offset: 2px;
+}
+
+.ifx-muted {
+  color: var(--ifx-muted);
+}
+
+.ifx-wrap {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ifx-main {
+  padding-top: 28px;
+  padding-bottom: 80px;
+}
+
+/* ---------- search + header ---------- */
+
+.ifx-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--ifx-bg);
+  border-bottom: 1px solid var(--ifx-line);
+}
+
+.ifx-header-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 64px;
+}
+
+.ifx-brand {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ifx-brand span,
+.ifx-home-title span {
+  color: var(--ifx-star);
+}
+
+.ifx-search {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+}
+
+.ifx-search input[type='search'] {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--ifx-line);
+  border-radius: 10px;
+  background: var(--ifx-surface);
+  color: inherit;
+  font: inherit;
+}
+
+.ifx-search input[type='search']::placeholder {
+  color: var(--ifx-muted);
+}
+
+.ifx-search button {
+  height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ifx-text);
+  color: var(--ifx-bg);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ifx-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 100vh;
+  padding: 0 20px 12vh;
+}
+
+.ifx-home-title {
+  font-size: clamp(34px, 7vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ifx-search--hero {
+  flex: none;
+  width: 100%;
+  max-width: 620px;
+}
+
+.ifx-search--hero input[type='search'] {
+  height: 54px;
+  padding: 0 20px;
+  border-radius: 14px;
+  font-size: 18px;
+}
+
+.ifx-search--hero button {
+  height: 54px;
+  padding: 0 24px;
+  border-radius: 14px;
+}
+
+.ifx-hint {
+  max-width: 460px;
+  color: var(--ifx-muted);
+  text-align: center;
+}
+
+/* ---------- messages ---------- */
+
+.ifx-message {
+  max-width: 560px;
+  margin: 8vh auto 0;
+  display: grid;
+  gap: 12px;
+}
+
+.ifx-message h1 {
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.ifx-message p {
+  color: var(--ifx-muted);
+}
+
+.ifx-message--error p {
+  color: var(--ifx-text);
+}
+
+.ifx-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.ifx-button {
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--ifx-line);
+  border-radius: 8px;
+  background: var(--ifx-surface);
+  cursor: pointer;
+}
+
+.ifx-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ifx-link);
+  cursor: pointer;
+}
+
+.ifx-link:hover {
+  text-decoration: underline;
+}
+
+.ifx-loading,
+.ifx-empty {
+  padding: 36px 0;
+  color: var(--ifx-muted);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ifx-loading {
+    animation: ifx-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes ifx-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ---------- title hero ---------- */
+
+.ifx-hero {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.ifx-poster {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--ifx-sunken);
+}
+
+.ifx-hero-body {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ifx-title {
+  font-size: clamp(26px, 5vw, 38px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+.ifx-meta {
+  color: var(--ifx-muted);
+}
+
+.ifx-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ifx-chips li,
+.ifx-chip {
+  padding: 2px 11px;
+  border: 1px solid var(--ifx-line);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.ifx-score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.ifx-star {
+  color: var(--ifx-star);
+}
+
+.ifx-score-num {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ifx-votes {
+  margin-left: 10px;
+}
+
+.ifx-metascore {
+  margin-left: 12px;
+  padding: 1px 8px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ifx-metascore--good {
+  background: #3f8a52;
+}
+
+.ifx-metascore--mixed {
+  background: #a68a14;
+}
+
+.ifx-metascore--bad {
+  background: #bf3a2b;
+}
+
+.ifx-plot {
+  max-width: 62ch;
+}
+
+.ifx-credits {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 18px;
+}
+
+.ifx-credits dt {
+  color: var(--ifx-muted);
+}
+
+.ifx-awards {
+  font-size: 14px;
+}
+
+/* ---------- tabs + panels ---------- */
+
+.ifx-tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 36px;
+  box-shadow: inset 0 -1px 0 var(--ifx-line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ifx-tabs button {
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--ifx-muted);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ifx-tabs button:hover {
+  color: var(--ifx-text);
+}
+
+.ifx-tabs button[aria-current] {
+  border-bottom-color: var(--ifx-star);
+  color: var(--ifx-text);
+  font-weight: 600;
+}
+
+.ifx-count {
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ifx-muted);
+}
+
+.ifx-panel {
+  padding-top: 24px;
+}
+
+.ifx-note {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* ---------- ratings ---------- */
+
+.ifx-ratings {
+  display: grid;
+  gap: 16px;
+}
+
+.ifx-histogram {
+  display: grid;
+  gap: 8px;
+  max-width: 520px;
+}
+
+.ifx-histogram li {
+  display: grid;
+  grid-template-columns: 24px 1fr 56px;
+  align-items: center;
+  gap: 12px;
+}
+
+.ifx-hist-label {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.ifx-hist-track {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--ifx-sunken);
+  overflow: hidden;
+}
+
+.ifx-hist-fill {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--ifx-star);
+}
+
+.ifx-hist-count {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- reviews ---------- */
+
+.ifx-review {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 18px 20px;
+  border: 1px solid var(--ifx-line);
+  border-radius: 12px;
+  background: var(--ifx-surface);
+}
+
+.ifx-review-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.ifx-review-rating {
+  display: inline-flex;
+  gap: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ifx-review-title {
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.ifx-review-by {
+  font-size: 14px;
+}
+
+.ifx-review-text {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.ifx-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  overflow: hidden;
+}
+
+.ifx-spoiler {
+  justify-self: start;
+  padding: 6px 12px;
+  border: 1px dashed var(--ifx-line);
+  border-radius: 8px;
+  background: none;
+  color: var(--ifx-muted);
+  cursor: pointer;
+}
+
+/* ---------- parents guide ---------- */
+
+.ifx-parents {
+  display: grid;
+  gap: 16px;
+}
+
+.ifx-reason {
+  font-weight: 600;
+}
+
+.ifx-pg {
+  display: grid;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid var(--ifx-line);
+  border-radius: 12px;
+  background: var(--ifx-surface);
+}
+
+.ifx-pg-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ifx-pg-head h3 {
+  font-size: 17px;
+}
+
+.ifx-pg-votes {
+  font-size: 14px;
+}
+
+.ifx-pg-items {
+  display: grid;
+  gap: 8px;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.ifx-spoilers summary {
+  margin-bottom: 8px;
+  color: var(--ifx-muted);
+  cursor: pointer;
+}
+
+.ifx-sev-bar {
+  display: flex;
+  height: 8px;
+  gap: 2px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ifx-sev-seg {
+  display: block;
+  min-width: 2px;
+}
+
+.ifx-sev--none {
+  background: var(--ifx-none);
+}
+
+.ifx-sev--mild {
+  background: var(--ifx-mild);
+}
+
+.ifx-sev--moderate {
+  background: var(--ifx-moderate);
+}
+
+.ifx-sev--severe {
+  background: var(--ifx-severe);
+}
+
+.ifx-chip.ifx-sev {
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ifx-chip.ifx-sev {
+    color: #121211;
+  }
+}
+
+/* ---------- cast & crew ---------- */
+
+.ifx-cast {
+  display: grid;
+  gap: 28px;
+}
+
+.ifx-credit-group {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.ifx-credit-group h3 {
+  font-size: 17px;
+}
+
+.ifx-credit-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 6px 24px;
+  width: 100%;
+}
+
+.ifx-name {
+  font-weight: 500;
+}
+
+.ifx-other-crew {
+  display: grid;
+  gap: 28px;
+}
+
+.ifx-other-crew summary {
+  margin-bottom: 20px;
+  color: var(--ifx-muted);
+  cursor: pointer;
+}
+
+.ifx-other-crew > .ifx-credit-group + .ifx-credit-group {
+  margin-top: 28px;
+}
+
+/* ---------- search results ---------- */
+
+.ifx-results {
+  display: grid;
+  gap: 4px;
+}
+
+.ifx-results-head {
+  margin-bottom: 10px;
+}
+
+.ifx-result {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  padding: 12px;
+  margin: 0 -12px;
+  border-radius: 12px;
+}
+
+.ifx-result:hover {
+  background: var(--ifx-surface);
+}
+
+.ifx-result img,
+.ifx-result-noimg {
+  width: 64px;
+  height: 95px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--ifx-sunken);
+}
+
+.ifx-result-body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ifx-result-body h2 {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.ifx-result-score .ifx-star {
+  margin-right: 4px;
+}
+
+.ifx-result-plot {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 560px) {
+  .ifx-hero {
+    grid-template-columns: 112px 1fr;
+    gap: 16px;
+  }
+
+  .ifx-header-row {
+    gap: 10px;
+  }
+
+  .ifx-brand {
+    display: none;
+  }
+}

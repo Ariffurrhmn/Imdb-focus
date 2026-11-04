@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "IMDb Focus",
+  "version": "1.0.0",
+  "description": "Turns IMDb into a lookup tool: search a title, see its rating, reviews, parents guide and cast. No carousels, no links to other titles or people.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.imdb.com/*"],
+      "css": ["focus.css"],
+      "js": ["src/util.js", "src/imdb.js", "src/views.js", "src/main.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
