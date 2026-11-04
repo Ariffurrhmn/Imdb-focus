@@ -1,0 +1,4 @@
+# Output of scripts/package.sh
+dist/
+.DS_Store
+Thumbs.db

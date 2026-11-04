@@ -1,0 +1,18 @@
+IMDb Focus: install guide (Chrome, Edge, Brave and other Chromium browsers)
+
+1. UNZIP this file somewhere permanent (for example Documents). Don't delete the
+   folder afterwards: the browser reads the extension from it.
+2. Open  chrome://extensions   (Edge: edge://extensions, Brave: brave://extensions)
+3. Turn on "Developer mode" (toggle, top right).
+4. Click "Load unpacked" and choose the folder you unzipped. It's the folder that
+   contains manifest.json directly inside it.
+5. Open imdb.com. Reload any IMDb tab that was already open.
+
+Chrome may show a "Disable developer mode extensions" notice at startup.
+That is normal for extensions installed this way. Dismiss it; don't click Disable.
+
+To update: unzip the new version over the old folder, then click the reload
+arrow on the IMDb Focus card at chrome://extensions.
+To remove: click "Remove" on the card at chrome://extensions.
+
+Project page: https://github.com/Ariffurrhmn/Imdb-focus
